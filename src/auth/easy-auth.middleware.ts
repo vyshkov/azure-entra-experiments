@@ -32,6 +32,7 @@ export class EasyAuthMiddleware implements NestMiddleware {
             (claim: any) => claim.typ === 'emails',
           )?.val,
           roles: clientPrincipal.userRoles,
+          decoded,
         };
         console.log('Parsed User:', req['user']);
       } catch (error) {
