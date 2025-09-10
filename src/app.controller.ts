@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { Controller, Get, Req } from '@nestjs/common';
@@ -10,7 +11,8 @@ export class AppController {
   @Get()
   getHello(@Req() request: Request): string {
     const user = request['user'] || { name: 'Anon' };
-
-    return this.appService.getHello({ user });
+    const name = user?.name || null;
+    const roles = user?.roles || null;
+    return this.appService.getHello(`Name: ${name}, roles: ${roles}`);
   }
 }
