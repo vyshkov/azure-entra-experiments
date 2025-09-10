@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -31,9 +32,10 @@ export class EasyAuthMiddleware implements NestMiddleware {
           email: clientPrincipal.claims?.find(
             (claim: any) => claim.typ === 'emails',
           )?.val,
-          roles: clientPrincipal.claims?.find(
-            (claim: any) => claim.typ === 'roles',
-          )?.val,
+          roles:
+            clientPrincipal.claims
+              ?.filter((claim: any) => claim.typ === 'roles')
+              .map((claim: any) => claim.val) || [],
           decoded,
         };
         console.log('Parsed User:', req['user']);
