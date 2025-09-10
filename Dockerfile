@@ -27,8 +27,11 @@ RUN npm install --omit=dev
 # Copy built app from builder stage
 COPY --from=builder /usr/src/app/dist ./dist
 
-# Expose port
-EXPOSE 3000
+# Azure App Service sets PORT=8080
+ENV PORT=8080
 
-# Run the app
+# Expose port for Azure
+EXPOSE 8080
+
+# Run the app, binding to Azure’s expected port
 CMD ["node", "dist/main"]
