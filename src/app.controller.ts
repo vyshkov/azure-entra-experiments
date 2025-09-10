@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Controller, Get, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 
@@ -9,8 +9,8 @@ export class AppController {
 
   @Get()
   getHello(@Req() request: Request): string {
-    const user = request['user'] || {};
+    const user = request['user'] || { name: 'Anon' };
 
-    return this.appService.getHello({ headers: request?.headers, user });
+    return this.appService.getHello({ user });
   }
 }
