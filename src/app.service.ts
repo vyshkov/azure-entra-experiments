@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Test CD works! 2';
+  getHello(data: object): string {
+    return `Hello, passed info: ${JSON.stringify(data)}`;
   }
 }

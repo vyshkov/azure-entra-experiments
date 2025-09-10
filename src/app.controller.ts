@@ -1,4 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Controller, Get, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -6,7 +8,9 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(@Req() request: Request): string {
+    const user = request['user'] || {};
+
+    return this.appService.getHello(user);
   }
 }
