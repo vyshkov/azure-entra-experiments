@@ -11,6 +11,6 @@ export class AppController {
   getHello(@Req() request: Request): string {
     const user = request['user'] || {};
 
-    return this.appService.getHello(user);
+    return this.appService.getHello({ headers: request?.headers, user });
   }
 }
