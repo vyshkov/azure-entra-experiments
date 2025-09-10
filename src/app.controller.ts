@@ -13,6 +13,8 @@ export class AppController {
     const user = request['user'] || { name: 'Anon' };
     const name = user?.name || null;
     const roles = user?.roles || null;
-    return this.appService.getHello(`Name: ${name}, roles: ${roles}`);
+    return this.appService.getHello(
+      `Name: ${name}, roles: ${roles}, decoded: ${user.decoded}`,
+    );
   }
 }
