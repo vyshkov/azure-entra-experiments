@@ -16,7 +16,7 @@ export class AppController {
     // return this.appService.getHello(
     //   `Name: ${name}, roles: ${roles}, decoded: ${user.decoded}`,
     // );
-    console.log(request);
-    return { data: 'Hello World', userInfo: request };
+    console.log('Request');
+    return { data: 'Hello World', userInfo: request?.['user'] || null };
   }
 }
