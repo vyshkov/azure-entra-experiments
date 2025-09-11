@@ -1,7 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
+
+type AuthDataResponse = {
+  name?: string;
+  email?: string;
+  roles?: string[];
+  secureData?: string;
+};
 
 @Controller()
 export class AppController {
@@ -9,14 +15,18 @@ export class AppController {
 
   @UseGuards(AuthGuard('azure-ad'))
   @Get()
-  getHello(@Req() request: Request): { data: string; userInfo: any } {
-    // const user = request['user'] || { name: 'Anon' };
-    // const name = user?.name || null;
-    // const roles = user?.roles || null;
-    // return this.appService.getHello(
-    //   `Name: ${name}, roles: ${roles}, decoded: ${user.decoded}`,
-    // );
+  getData(@Req() request: Request): AuthDataResponse {
     console.log('Request');
-    return { data: 'Hello World', userInfo: request?.['user'] || null };
+    const user = (request?.['user'] || {}) as {
+      name?: string;
+      email?: string;
+      roles?: string[];
+    };
+    return {
+      name: user?.name,
+      email: user?.email,
+      roles: user?.roles,
+      secureData: 'hello, this is secure: ' + new Date().toDateString(),
+    };
   }
 }
