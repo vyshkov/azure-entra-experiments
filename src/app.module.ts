@@ -1,7 +1,7 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EasyAuthMiddleware } from './auth/easy-auth.middleware';
+//import { EasyAuthMiddleware } from './auth/easy-auth.middleware';
 
 @Module({
   imports: [],
@@ -9,7 +9,7 @@ import { EasyAuthMiddleware } from './auth/easy-auth.middleware';
   providers: [AppService],
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(EasyAuthMiddleware).forRoutes('*');
-  }
+  // configure(consumer: MiddlewareConsumer) {
+  // // consumer.apply(EasyAuthMiddleware).forRoutes('*');
+  // }
 }
