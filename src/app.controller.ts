@@ -16,7 +16,6 @@ export class AppController {
   @UseGuards(AuthGuard('azure-ad'))
   @Get()
   getData(@Req() request: Request): AuthDataResponse {
-    console.log('Request');
     const user = (request?.['user'] || {}) as {
       name?: string;
       email?: string;
