@@ -15,17 +15,20 @@ export class AppController {
 
   @UseGuards(AuthGuard('azure-ad'))
   @Get()
-  getData(@Req() request: Request): AuthDataResponse {
+  async getData(@Req() request: Request): Promise<AuthDataResponse> {
     const user = (request?.['user'] || {}) as {
       name?: string;
       email?: string;
       roles?: string[];
     };
+
+    const url = await this.appService.uploadRandomFile();
+
     return {
       name: user?.name,
       email: user?.email,
       roles: user?.roles,
-      secureData: 'hello, this is secure: ' + new Date().toDateString(),
+      secureData: 'URL:' + url,
     };
   }
 }
