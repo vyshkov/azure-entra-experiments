@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DefaultAzureCredential } from '@azure/identity';
 import {
   BlobServiceClient,
   generateBlobSASQueryParameters,
@@ -23,13 +24,15 @@ function generateRandomText() {
 export class AppService {
   private blobServiceClient: BlobServiceClient;
   private containerName = 'tempfiles';
-  private accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME!; // optional
-  private connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING!;
+  private accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME; // optional
   private containerClient: ContainerClient;
 
   constructor() {
-    this.blobServiceClient = BlobServiceClient.fromConnectionString(
-      this.connectionString,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    const credential = new DefaultAzureCredential();
+    this.blobServiceClient = new BlobServiceClient(
+      `https://${this.accountName}.blob.core.windows.net`,
+      credential,
     );
     this.containerClient = this.blobServiceClient.getContainerClient(
       this.containerName,

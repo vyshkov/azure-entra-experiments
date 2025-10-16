@@ -28,7 +28,7 @@ export class AppController {
       name: user?.name,
       email: user?.email,
       roles: user?.roles,
-      secureData: 'URL:' + url,
+      secureData: 'new URL:' + url,
     };
   }
 }
